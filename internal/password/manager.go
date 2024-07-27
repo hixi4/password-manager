@@ -8,13 +8,13 @@ import (
 	"os"
 )
 
-// представляє менеджер паролів, який зберігає паролі у файлі
+// Manager представляє менеджер паролів, який зберігає паролі у файлі
 type Manager struct {
 	filePath  string            // Шлях до файлу для зберігання паролів
 	passwords map[string]string // Карта для зберігання паролів
 }
 
-// створює новий екземпляр Manager і завантажує паролі з файлу
+// NewManager створює новий екземпляр Manager і завантажує паролі з файлу
 func NewManager(filePath string) (*Manager, error) {
 	manager := &Manager{
 		filePath:  filePath,
@@ -27,7 +27,7 @@ func NewManager(filePath string) (*Manager, error) {
 	return manager, nil
 }
 
-// завантажує паролі з файлу
+// loadPasswords завантажує паролі з файлу
 func (m *Manager) loadPasswords() error {
 	if _, err := os.Stat(m.filePath); os.IsNotExist(err) {
 		return nil // Якщо файл не існує, просто повертаємо nil
@@ -43,7 +43,7 @@ func (m *Manager) loadPasswords() error {
 	return nil
 }
 
-// зберігає паролі у файл
+// savePasswords зберігає паролі у файл
 func (m *Manager) savePasswords() error {
 	data, err := json.Marshal(m.passwords)
 	if err != nil {
@@ -56,7 +56,7 @@ func (m *Manager) savePasswords() error {
 	return nil
 }
 
-// виводить назви збережених паролів
+// ListPasswords виводить назви збережених паролів
 func (m *Manager) ListPasswords() {
 	fmt.Println("Saved passwords:")
 	for name := range m.passwords {
